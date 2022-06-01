@@ -5,8 +5,8 @@ CREATE TABLE public.article (
 	"like_count" float8 NULL,
 	"dislike_count" float8 NULL,
     "author" varchar(255) NOT NULL,
-	'created_at' timestamptz NOT NULL,
-	'modified_at' timestamptz NOT NULL,
+	"created_at" timestamptz NOT NULL,
+	"modified_at" timestamptz NOT NULL,
 	CONSTRAINT article_pkey PRIMARY KEY (id)
 );
 
@@ -17,16 +17,16 @@ CREATE TABLE public.comment (
 	"like_count" float8 NULL,
 	"dislike_count" float8 NULL,
 	"article_id" uuid NOT NULL,
-	'created_at' timestamptz NOT NULL,
-	'modified_at' timestamptz NOT NULL,
+	"created_at" timestamptz NOT NULL,
+	"modified_at" timestamptz NOT NULL,
 	CONSTRAINT comment_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE public.category (
 	"id" uuid NOT NULL,
     "name" varchar(255) NOT NULL,
-	'created_at' timestamptz NOT NULL,
-	'modified_at' timestamptz NOT NULL,
+	"created_at" timestamptz NOT NULL,
+	"modified_at" timestamptz NOT NULL,
 	CONSTRAINT category_pkey PRIMARY KEY (id)
 );
 
