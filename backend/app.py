@@ -21,7 +21,7 @@ def hello_server():
 @app.route('/articles', methods=['GET'])
 def get_articles():
     article_id = request.args.get("article_id", None)
-    return flask_service.get_articles(db=postgresDB, id=article_id)
+    return flask_service.get_articles(db=postgresDB, article_id=article_id)
 
 @app.route('/articles', methods=['POST'])
 def create_article():
@@ -31,22 +31,25 @@ def create_article():
 @app.route('/articles/<article_id>', methods=['DELETE'])
 def delete_article(article_id):
     data = request.json
-    return flask_service.update_article(db=postgresDB, id=article_id, data=data)
+    return flask_service.update_article(db=postgresDB, article_id=article_id, data=data)
 
 @app.route('/articles/<article_id>', methods=['DELETE'])
 def delete_article(article_id):
-    return flask_service.delete_article(db=postgresDB, id=article_id)
+    return flask_service.delete_article(db=postgresDB, article_id=article_id)
 
 
 if __name__ == "__main__":
     logger = get_module_logger(mod_name=__name__, log_path='./logs/app_logs.log', lvl=logging.DEBUG)
     postgresDB = PostgresDB(db_host=os.environ.get("DB_HOST"), db_port=os.environ.get("DB_PORT"),
-                            db_user=os.environ.get("DB_USER"), db_password=os.environ.get("DB_PASSWORD"),
-                            db_name=os.environ.get("DB_NAME"))
+                            db_user=os.environ.get("POSTGRES_USER"), db_password=os.environ.get("POSTGRES_PASSWORD"),
+                            db_name=os.environ.get("POSTGRES_DB"))
     
     try:
         # TODO: get tables
-        tablename_table = postgresDB.get_table('table_name')
+        article_table = postgresDB.get_table('article')
+        category_table = postgresDB.get_table('category')
+        comment_table = postgresDB.get_table('comment')
+        relation_category_article_table = postgresDB.get_table('relation_category_article')
         
         logger.info('Got tables')
         app.run(host='0.0.0.0', port=5000)

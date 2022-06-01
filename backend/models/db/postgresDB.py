@@ -44,13 +44,17 @@ class PostgresDB():
         conn = self.engine.connect()
         return pd.read_sql(query, conn)
 
-    def get_by_id(self, table_name:str, id:str):
+    def get(self, table_name:str, id:str):
+        table = self.get_table(table_name=table_name)
         try:
-            table = self.get_table(table_name=table_name)
-            query = select(table).where(table.c.id == id)
+            if id is None:
+                query = select(table).where(table.c.id == id)
+            else:
+                query = select(table)
             return self.get_df_from_sql(query=query)
         except Exception as ex:
             logger.exception(ex)
+            raise ex
 
     def create(self,  table_name: str, df: pd.DataFrame):
         df.to_sql(name=table_name, con=self.engine, if_exists='append', index=False)

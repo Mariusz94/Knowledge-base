@@ -5,13 +5,6 @@ services:
     hostname: postgres
     image: postgres:14.2-alpine
     restart: always
-    environment:
-      - PGUSER=postgres
-      - PGPASSWORD=postgres
-      - PGDATABASE=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
     ports:
       - 5435:5432
     expose:
