@@ -1,0 +1,16 @@
+FROM python:3.8-slim-buster
+
+RUN apt-get update 
+
+RUN adduser worker
+
+RUN mkdir -p /home/api && chown -R worker:worker /home/api
+WORKDIR /home/api
+USER worker
+
+COPY --chown=worker:worker ./requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY --chown=worker:worker ./ ./
+
+CMD [ "python3", "-u", "app.py"]
