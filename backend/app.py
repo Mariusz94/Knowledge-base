@@ -20,8 +20,8 @@ def hello_server():
 
 @app.route('/articles', methods=['GET'])
 def get_articles():
-    id = request.args.get("id", None)
-    return flask_service.get_articles(db=postgresDB, id=id)
+    article_id = request.args.get("article_id", None)
+    return flask_service.get_articles(db=postgresDB, id=article_id)
 
 @app.route('/articles', methods=['POST'])
 def create_article():
