@@ -22,3 +22,16 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+
+error Delete `·` prettier/prettier
+npm run lint --fix
+'prettier/prettier': ['error', { endOfLine: 'auto' }] add to ruls
+
+priettierrc.json
+{
+  "endOfLine": "auto"
+}
+
+LF an bottom VSC

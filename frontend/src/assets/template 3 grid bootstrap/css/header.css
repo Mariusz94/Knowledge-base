@@ -1,0 +1,51 @@
+.header-class {
+    margin:0px;
+    padding:0px;
+    /* width:100vw; */
+}
+    
+header {
+    height: 60px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-content: center;
+    background-color: rgba(36,37,38,1);
+
+}
+
+#logo {
+    font-size: 24px;
+    font-family: 'Press Start 2P', cursive;
+    color: rgb(255, 255, 255);
+    overflow: hidden;
+    border-right: .15em solid white;
+    white-space: nowrap;
+    margin: 0 auto;
+    /* letter-spacing: .15sem; */
+    animation:
+        typing 3.5s steps(14, end),
+        blink-caret .7s step-end infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
+}
+
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: white
+    }
+}

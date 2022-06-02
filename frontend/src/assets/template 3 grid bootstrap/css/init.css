@@ -1,0 +1,15 @@
+* {
+    box-sizing: border-box;
+    margin:0px
+}
+
+body {
+    font-family: sans-serif;
+    margin: 0px;
+    background-color: rgba(24,25,26,1);
+}
+
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}

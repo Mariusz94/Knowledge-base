@@ -1,0 +1,10 @@
+footer {
+    background-color: rgba(36,37,38,1);
+    color: white;
+    text-align: center;
+}
+
+footer p {
+    font-size: 14px;
+    opacity: .3
+}

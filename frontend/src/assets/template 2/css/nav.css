@@ -1,0 +1,50 @@
+nav {
+    min-height: 87.2vh;
+    color: white;
+    font-size: 24px;
+    position: relative;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    gap:2px;
+    height: 100%;
+    margin: 3px 0px 0px 10px;
+}
+
+nav ul li {
+    margin-top: 10px;
+    width:100%;
+} 
+
+
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+nav ul li a div {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    width:100%;
+}
+
+nav ul li a:hover,
+nav ul li a:active {
+    text-decoration: none;
+    color: white;
+}
+
+nav ul li a:hover div,
+nav ul li a:active div{
+    background-color: rgba(48, 48, 49, 1);
+    border-radius: 10px;
+}
