@@ -42,7 +42,6 @@
             background-image: url('./wlibrary.jpg');
             background-size: cover;
             filter: blur(2px);
-            /* transform: scale(1.1); */
             opacity: 1;
             position: absolute;
             top: 0px;
@@ -110,6 +109,22 @@
             z-index: -1000;
         }
 
+        #nav-bg-image img {
+            height: 15%;
+            mask-repeat: top;
+
+        }
+
+        #nav-rope-image {
+            width: 20px;
+            height: 100%;
+            background-image: url("./rope2.png");
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+
         nav ul {
             list-style: none;
             margin: 0;
@@ -137,7 +152,7 @@
 
         nav ul li a:hover,
         nav ul li a:active {
-            color: coral
+            color: rgb(0, 0, 0)
         }
 
 
@@ -157,6 +172,10 @@
             grid-area: footer;
         }
 
+        footer p {
+            opacity: .3
+        }
+
         .search-bar {
             background-color: rgb(189, 176, 176);
             width: 100%;
@@ -165,6 +184,27 @@
         .content {
             background-color: rgb(189, 176, 176);
             width: 98%;
+        }
+
+        @font-face {
+            font-family: 'book';
+            src: url('./font/book.eot?30681716');
+            src: url('./font/book.eot?30681716#iefix') format('embedded-opentype'),
+                url('./font/book.woff?30681716') format('woff'),
+                url('./font/book.ttf?30681716') format('truetype'),
+                url('./font/book.svg?30681716#book') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .bookmark-icon {
+            font-family: "book";
+            font-style: normal;
+            font-weight: normal;
+            width: 1em;
+            margin-right: .2em;
+            text-align: center;
+            margin-left: .2em;
         }
     </style>
 </head>
@@ -179,11 +219,15 @@
         </div>
     </header>
     <nav>
-        <div id="nav-bg-image"></div>
+        <div id="nav-bg-image">
+            <div id="nav-rope-image">
+                <!-- <img src="./rope2.png"> -->
+            </div>
+        </div>
         <ul>
-            <li><a href="#">Home page</a></li>
-            <li><a href="#">Add article</a></li>
-            <li><a href="#">Categories</a></li>
+            <li><a href="#"><i class="bookmark-icon">&#xe800;</i> Home page</a></li>
+            <li><a href="#"><i class="bookmark-icon">&#xe800;</i> Add article</a></li>
+            <li><a href="#"><i class="bookmark-icon">&#xe800;</i> Categories</a></li>
         </ul>
     </nav>
     <main>
