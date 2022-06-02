@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Knowledge base</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: sans-serif;
+            margin: 0px;
+            display: grid;
+            grid-template-columns: 15% auto;
+            grid-template-rows: 60px auto 60px;
+            grid-template-areas: "header header"
+                "nav main"
+                "footer footer";
+        }
+
+        header {
+            grid-area: header;
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            align-content: center;
+            background-color: rgba(0, 0, 0, 0.7);
+
+        }
+
+        #bg-image {
+            height: 100%;
+            width: 100%;
+            content: "";
+            background-image: url('./wlibrary.jpg');
+            background-size: cover;
+            filter: blur(2px);
+            /* transform: scale(1.1); */
+            opacity: 1;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: -1000
+        }
+
+        header div p {
+            font-size: 24px;
+            font-family: 'Press Start 2P', cursive;
+            color: rgb(255, 255, 255);
+            overflow: hidden;
+            border-right: .15em solid white;
+            white-space: nowrap;
+            margin: 0 auto;
+            /* letter-spacing: .15sem; */
+            animation:
+                typing 3.5s steps(14, end),
+                blink-caret .7s step-end infinite;
+
+        }
+
+        /* The typing effect */
+        @keyframes typing {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        /* The typewriter cursor effect */
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: white
+            }
+        }
+
+        nav {
+            grid-area: nav;
+            min-height: 87.2vh;
+            color: white;
+            font-size: 30px;
+            position: relative;
+        }
+
+        #nav-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("./nav.jpg");
+            background-size: cover;
+            filter: blur(1px);
+            opacity: 0.9;
+            z-index: -1000;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: start;
+            height: 100%;
+            padding: 40px 0px 0px 20px;
+        }
+
+        nav ul li {
+            margin-top: 10px;
+        }
+
+        nav ul li a {
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+        }
+
+        nav ul li a:hover,
+        nav ul li a:active {
+            color: coral
+        }
+
+
+        main {
+            background-color: rgba(100, 2, 76, 0.1);
+            color: white;
+            grid-area: main;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 1);
+            color: white;
+            font-size: 14px;
+            text-align: center;
+            grid-area: footer;
+        }
+
+        .search-bar {
+            background-color: rgb(189, 176, 176);
+            width: 100%;
+        }
+
+        .content {
+            background-color: rgb(189, 176, 176);
+            width: 98%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="bg-image">
+
+    </div>
+    <header>
+        <div>
+            <p>Knowledge base</p>
+        </div>
+    </header>
+    <nav>
+        <div id="nav-bg-image"></div>
+        <ul>
+            <li><a href="#">Home page</a></li>
+            <li><a href="#">Add article</a></li>
+            <li><a href="#">Categories</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="search-bar">
+            <p>search-bar</p>
+        </div>
+        <div class="content">
+            <p>content</p>
+        </div>
+    </main>
+    <footer>
+        <p>2022 © Made with passion by Mariusz Łyszczarz</p>
+    </footer>
+</body>
+
+</html>
