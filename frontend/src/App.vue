@@ -1,11 +1,20 @@
 <template>
-  <div id="bg-image"></div>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+  <AppHeader />
   <router-view />
+  <AppFooter />
 </template>
+
+<script lang="ts">
+import AppHeader from "@/ui/components/AppHeader.vue";
+import AppFooter from "@/ui/components/AppFooter.vue";
+
+export default {
+  components: {
+    AppHeader,
+    AppFooter,
+  },
+};
+</script>
 
 <style lang="scss">
 * {
@@ -13,7 +22,9 @@
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  background-color: rgba(24, 25, 26, 1);
+  font-family: sans-serif;
+  margin: 0px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
