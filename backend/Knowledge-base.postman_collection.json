@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "eebf2a83-27dd-45d9-9239-7db566469558",
+		"_postman_id": "26d22356-bc13-4ceb-96ad-22d80fbc82d5",
 		"name": "Knowledge-base",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "17443842"
+		"_exporter_id": "17811978"
 	},
 	"item": [
 		{
@@ -41,12 +41,29 @@
 			"response": []
 		},
 		{
+			"name": "Categories - all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/categories",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Articles - by article id",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/articles?article_id=",
+					"raw": "{{url}}/articles?article_id=b38c7e20-e688-11ec-8fea-0242ac120002",
 					"host": [
 						"{{url}}"
 					],
@@ -56,7 +73,30 @@
 					"query": [
 						{
 							"key": "article_id",
-							"value": ""
+							"value": "b38c7e20-e688-11ec-8fea-0242ac120002"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categories - by article id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/categories?categories_id=93b4474e-ffe6-4156-b0c3-452df5dba2fc",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"categories"
+					],
+					"query": [
+						{
+							"key": "categories_id",
+							"value": "93b4474e-ffe6-4156-b0c3-452df5dba2fc"
 						}
 					]
 				}
@@ -79,7 +119,7 @@
 					"query": [
 						{
 							"key": "",
-							"value": null
+							"value": ""
 						}
 					]
 				}
@@ -91,13 +131,48 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"author\": \"mlyszczarz\",\n        \"content\": \"'Tworzenie odrębnego środowiska\\\\npython -m venv venv\\\\n. venv\\\\\\\"Scripts\\\\\\\"activate\\\\ndeactivate\\\\nTworzenie venv z bibliotekami w systemie\\\\npython -m venv --system-site-packages venv\\\\n. venv\\\\\\\"Scripts\\\\\\\"activate\\\\nPobieranie zależności do pliku tekstowego\\\\npip freeze > zaleznosci.txt'\",\n        \"title\": \"Venv\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{url}}/",
+					"raw": "{{url}}/articles",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						""
+						"articles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categories - create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"name\": \"Vue\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/categories",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"categories"
 					]
 				}
 			},
@@ -108,13 +183,50 @@
 			"request": {
 				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"author\": \"wnowak\"\n        \n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{url}}/",
+					"raw": "{{url}}/articles/b4914b9d-998e-4666-8e82-3bc79d03ba98",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						""
+						"articles",
+						"b4914b9d-998e-4666-8e82-3bc79d03ba98"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categories - by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"name\": \"Dart\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/categories/93b4474e-ffe6-4156-b0c3-452df5dba2fc",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"categories",
+						"93b4474e-ffe6-4156-b0c3-452df5dba2fc"
 					]
 				}
 			},
@@ -126,12 +238,31 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/",
+					"raw": "{{url}}/articles/b4914b9d-998e-4666-8e82-3bc79d03ba98",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						""
+						"articles",
+						"b4914b9d-998e-4666-8e82-3bc79d03ba98"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categories - by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/categories/93b4474e-ffe6-4156-b0c3-452df5dba2fc",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"categories",
+						"93b4474e-ffe6-4156-b0c3-452df5dba2fc"
 					]
 				}
 			},
@@ -161,7 +292,7 @@
 	"variable": [
 		{
 			"key": "url",
-			"value": "http://localhost",
+			"value": "http://localhost:5000\n",
 			"type": "string"
 		}
 	]
