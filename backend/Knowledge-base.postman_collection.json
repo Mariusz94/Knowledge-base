@@ -104,23 +104,63 @@
 			"response": []
 		},
 		{
+			"name": "Comments - by article id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/comments?article_id=b38c7e20-e688-11ec-8fea-0242ac120002",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"comments"
+					],
+					"query": [
+						{
+							"key": "article_id",
+							"value": "b38c7e20-e688-11ec-8fea-0242ac120002"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Comments - by author",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/comments?author=wnowak",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"comments"
+					],
+					"query": [
+						{
+							"key": "author",
+							"value": "wnowak"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Articles - by param",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/articles?",
+					"raw": "{{url}}/articles",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"articles"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": ""
-						}
 					]
 				}
 			},
@@ -153,13 +193,13 @@
 			"response": []
 		},
 		{
-			"name": "Categories - create",
+			"name": "Comments - create",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"name\": \"Vue\"\n    }",
+					"raw": "    {\n        \"author\": \"mlyszczarz\",\n        \"content\": \"'Tworzenie odrębnego środowiska\\\\npython -m venv venv\\\\n. venv\\\\\\\"Scripts\\\\\\\"activate\\\\ndeactivate\\\\nTworzenie venv z bibliotekami w systemie\\\\npython -m venv --system-site-packages venv\\\\n. venv\\\\\\\"Scripts\\\\\\\"activate\\\\nPobieranie zależności do pliku tekstowego\\\\npip freeze > zaleznosci.txt'\",\n        \"title\": \"Venv\"\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -167,12 +207,38 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/categories",
+					"raw": "{{url}}/articles",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"categories"
+						"articles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categories - create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"author\": \"wnowak8\",\n        \"content\": \"Kolejny super pomocny artykul\",\n        \"article_id\": \"b38c7e20-e688-11ec-8fea-0242ac120002\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/comments",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"comments"
 					]
 				}
 			},
@@ -206,13 +272,13 @@
 			"response": []
 		},
 		{
-			"name": "Categories - by id",
+			"name": "Comments - by id",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"name\": \"Dart\"\n    }",
+					"raw": "    {\n        \"author\": \"wnowak\"\n        \n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -220,13 +286,40 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/categories/93b4474e-ffe6-4156-b0c3-452df5dba2fc",
+					"raw": "{{url}}/articles/b4914b9d-998e-4666-8e82-3bc79d03ba98",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"categories",
-						"93b4474e-ffe6-4156-b0c3-452df5dba2fc"
+						"articles",
+						"b4914b9d-998e-4666-8e82-3bc79d03ba98"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categories - by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"content\": \"Test update\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/comments/dae3632c-dd7c-473c-84d4-9d86ee9960be",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"comments",
+						"dae3632c-dd7c-473c-84d4-9d86ee9960be"
 					]
 				}
 			},
@@ -251,18 +344,36 @@
 			"response": []
 		},
 		{
+			"name": "Comments - by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/articles/b4914b9d-998e-4666-8e82-3bc79d03ba98",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"articles",
+						"b4914b9d-998e-4666-8e82-3bc79d03ba98"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Categories - by id",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/categories/93b4474e-ffe6-4156-b0c3-452df5dba2fc",
+					"raw": "{{url}}/comments/dae3632c-dd7c-473c-84d4-9d86ee9960be",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"categories",
-						"93b4474e-ffe6-4156-b0c3-452df5dba2fc"
+						"comments",
+						"dae3632c-dd7c-473c-84d4-9d86ee9960be"
 					]
 				}
 			},
