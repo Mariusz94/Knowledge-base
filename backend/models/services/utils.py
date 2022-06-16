@@ -9,3 +9,11 @@ article_columns = ["id",
 
 category_columns=["id","name","created_at","modified_at"]
 
+comment_columns = ["id",
+                   "author",
+                   "content",
+                   "like_count",
+                   "dislike_count",
+                   "article_id",
+                   "created_at",
+                   "modified_at"]
