@@ -1,0 +1,413 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Knowledge-base
+servers:
+  - url: http://localhost:5000
+paths:
+  /article:
+    post:
+      tags:
+        - "Article"
+      summary: "Create article."
+      operationId: "createArticle"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArticleId"
+        "400":
+          description: Bad request.
+    get:
+      tags:
+        - "Article"
+      summary: "Get all articles."
+      operationId: "getArticles"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllArticlesResponse"
+        "400":
+          description: Bad request.
+   
+  /article/{article_id}:
+    parameters:
+      - name: "article_id"
+        in: "path"
+        description: "article_id"
+        required: true
+        allowEmptyValue: true
+        schema:
+          type: "string"
+          example: "9650f87d-c6cc-4830-ad9a-d7c2d8bef522"
+    get:
+      tags:
+        - "Article"
+      summary: "Get article by id."
+      operationId: "getArticleById"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArticleResponse"
+        "400":
+          description: Bad request.    
+    put:
+        tags:
+          - "Article"
+        summary: "Update article."
+        operationId: "updateArticle"
+        
+        responses:
+          "200":
+            description: "Successful operation"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ArticleId"
+          "400":
+            description: Bad request.
+            
+    delete:
+        tags:
+          - "Article"
+        summary: "Delete article."
+        operationId: "deleteArticle"
+        
+        responses:
+          "200":
+            description: "Successful operation"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ArticleId"
+          "400":
+            description: Bad request.           
+            
+            
+ 
+  /categories:
+    post:
+      tags:
+        - "Category"
+      summary: "Create category."
+      operationId: "createCategory"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryId"
+        "400":
+          description: Bad request.
+    get:
+      tags:
+        - "Category"
+      summary: "Get all categories."
+      operationId: "getCategories"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllCategoriesResponse"
+        "400":
+          description: Bad request.
+  /categories/{category_id}:
+    parameters:
+      - name: "category_id"
+        in: "path"
+        description: "category_id"
+        required: true
+        allowEmptyValue: true
+        schema:
+          type: "string"
+          example: "dae3632c-dd7c-473c-84d4-9d86ee9960be"
+    put:
+        tags:
+          - "Category"
+        summary: "Update category."
+        operationId: "updateCategory"
+        
+        responses:
+          "200":
+            description: "Successful operation"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/CategoryId"
+          "400":
+            description: Bad request.
+            
+    delete:
+        tags:
+          - "Category"
+        summary: "Delete category."
+        operationId: "deleteCategory"
+        
+        responses:
+          "200":
+            description: "Successful operation"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/CategoryId"
+          "400":
+            description: Bad request.           
+            
+  /comments:
+    post:
+      tags:
+        - "Comment"
+      summary: "Create comment."
+      operationId: "createComment"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommentId"
+        "400":
+          description: Bad request.
+  /comments/{comment_id}:  
+    parameters:
+      - name: "comment_id"
+        in: "path"
+        description: "comment_id"
+        required: true
+        allowEmptyValue: true
+        schema:
+          type: "string"
+          example: "b4914b9d-998e-4666-8e82-3bc79d03ba98"
+    put:
+        tags:
+          - "Comment"
+        summary: "Update comment."
+        operationId: "updateComment"
+        
+        responses:
+          "200":
+            description: "Successful operation"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/CommentId"
+          "400":
+            description: Bad request.
+            
+    delete:
+        tags:
+          - "Comment"
+        summary: "Delete comment."
+        operationId: "deleteComment"
+        
+        responses:
+          "200":
+            description: "Successful operation"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/CommentId"
+          "400":
+            description: Bad request.           
+  /comments/{article_id}:  
+    parameters:
+      - name: "article_id"
+        in: "path"
+        description: "article_id"
+        required: true
+        allowEmptyValue: true
+        schema:
+          type: "string"
+          example: "9650f87d-c6cc-4830-ad9a-d7c2d8bef522"            
+    get:
+      tags:
+        - "Comment"
+      summary: "Get all comments from article."
+      operationId: "getCommentsFromArticle"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllCommentsResponse"
+        "400":
+          description: Bad request.                       
+  /comments/{author}:  
+    parameters:
+      - name: "author"
+        in: "path"
+        description: "author"
+        required: true
+        allowEmptyValue: true
+        schema:
+          type: "string"
+    get:
+      tags:
+        - "Comment"
+      summary: "Get all author's comments."
+      operationId: "getAuthorsComments"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllCommentsResponse"
+        "400":
+          description: Bad request.                          
+  
+  /database-to-txt:
+    post:
+      tags:
+        - "DB to .txt"
+      summary: "DB to txt file."
+      operationId: "dbToTxt"
+      # requestBody:
+      #   content:
+      #     application/json:
+      #       schema:
+      #         $ref: '#/components/schemas/Txt'
+      responses:
+        "200":
+          description: "Successful operation"
+        "400":
+          description: Bad request.
+components:
+  schemas:
+    ArticleId:
+      type: "object"
+      properties:
+        article_id:
+          type: "string"
+          example: "84dca506-e655-11ec-8fea-0242ac120002"
+      required:
+        - article_id
+    Article:
+      type: "object"
+      properties:
+        author:
+          type: "string"
+          example: "name"
+        content:
+          type: "string"
+        title:
+          type: "string"
+          example: "Python"
+    AllArticlesResponse:
+      type: "array"
+      items:
+        $ref: '#/components/schemas/ArticleResponse'
+    ArticleResponse:
+      type: "object"
+      properties:
+        author:
+          type: "string"
+        content:
+          type: "string"
+        created_at:
+          type: "string"
+        dislike_count:
+          type: "integer"
+        id:
+          type: "string"
+        like_count:
+          type: "integer"
+        modified_at:
+          type: "string"
+        title:
+          type: "string"
+
+    CategoryId:
+      type: "object"
+      properties:
+        category_id:
+          type: "string"
+          example: "007fc922-13ff-4097-aadb-dda537aab1f2"
+      required:
+        - category_id
+    Category:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+    AllCategoriesResponse:
+      type: "array"
+      items:
+        $ref: '#/components/schemas/CategoryResponse'
+    CategoryResponse:
+      type: "object"
+      properties:
+        created_at:
+          type: "string"
+        id:
+          type: "string"
+        modified_at:
+          type: "string"
+        name:
+          type: "string"
+          
+    CommentId:
+      type: "object"
+      properties:
+        comment_id:
+          type: "string"
+          example: "90b4474e-ffe6-4156-b0c3-452df5dba2fc"
+      required:
+        - comment_id
+    Comment:
+      type: "object"
+      properties:
+        author:
+          type: "string"
+        content:
+          type: "string"
+        title:
+          type: "string"
+    AllCommentsResponse:
+      type: "array"
+      items:
+        $ref: '#/components/schemas/CommentResponse'
+    CommentResponse:
+      type: "object"
+      properties:
+        author:
+          type: "string"
+        content:
+          type: "string"
+        created_at:
+          type: "string"
+        dislike_count:
+          type: "integer"
+        id:
+          type: "string"
+        like_count:
+          type: "integer"
+        modified_at:
+          type: "string"
