@@ -2,11 +2,9 @@
   <b-container fluid>
     <b-row>
       <b-col xs="12" sm="4" md="3" lg="2">
-        <!-- <b-col md="2"> -->
         <AppNav />
       </b-col>
       <b-col xs="12" sm="8" md="9" lg="10" style="padding: 0">
-        <!-- <b-col style="padding: 0"> -->
         <main>
           <AppSearchBar />
           <AppTestComponent />
