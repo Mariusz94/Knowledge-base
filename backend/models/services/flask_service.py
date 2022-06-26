@@ -1,10 +1,12 @@
 import datetime
 import json
 import uuid
+
 import pandas as pd
 from flask import jsonify
 from models.db.postgresDB import PostgresDB
 from models.services import utils
+
 from sqlalchemy import select, and_
 
 
@@ -159,3 +161,66 @@ def delete_comment(db: PostgresDB, comment_id, comment_table):
     except:
         return jsonify({'Could not delete comment'})
         raise Exception('Could not delete comment')
+def db_to_txt(db: PostgresDB,article_table,relation_category_article_table,category_table,comment_table):
+    query = select(article_table.c.id,
+                   article_table.c.title,
+                   article_table.c.content,
+                   article_table.c.author) \
+        .join(relation_category_article_table, article_table.c.id == relation_category_article_table.c.article_id)
+    try:
+        article_data = db.get_df_from_sql(query=query)
+        print('Response has been sent')
+    except:
+        print('Could not get data from database')
+        raise Exception('Could not get data from database')
+    articles_ids = article_data['id'].to_list()
+
+    query = select(relation_category_article_table.c.article_id.label("id"),
+                   category_table.c.id.label("CateogryId"),
+                   category_table.c.name) \
+        .where(relation_category_article_table.c.article_id.in_(articles_ids)) \
+        .join(category_table, category_table.c.id == relation_category_article_table.c.category_id)
+    try:
+        category_data = db.get_df_from_sql(query=query)
+        print('Response has been sent')
+    except:
+        print('Could not get data from database')
+        raise Exception('Could not get data from database')
+    article_data = article_data.to_dict(orient='records')
+    for article in article_data: article['categories'] = []
+    for index, row in category_data.iterrows():
+        category = {
+            "name": row['name'],
+        }
+        for article in article_data:
+            if article['id'] == row['id']:
+                article['categories'].append(category)
+                break
+
+    query = select(comment_table.c.article_id.label("id"),
+                   comment_table.c.id.label("commentId"),
+                   comment_table.c.author,
+                   comment_table.c.content) \
+        .where(relation_category_article_table.c.article_id.in_(articles_ids)) \
+        .join(category_table, category_table.c.id == relation_category_article_table.c.category_id)
+    try:
+        comment_data = db.get_df_from_sql(query=query)
+        print('Response has been sent')
+    except:
+        print('Could not get data from database')
+        raise Exception('Could not get data from database')
+    for article in article_data: article['comments'] = []
+
+    for index, row in comment_data.iterrows():
+        comment = {
+            "author": row['author'],
+            "content": row['content'],
+        }
+        for article in article_data:
+            if article['id'] == row['id']:
+                article['comments'].append(comment)
+                break
+    new_dict = dict((k.upper(), v) for k, v in article.items())
+    # with open('no.txt', 'w') as txtfile:
+    #     json.dump(article_data, txtfile)
+    return jsonify(article_data), 200
