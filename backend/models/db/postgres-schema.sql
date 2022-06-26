@@ -52,7 +52,13 @@ INSERT INTO public.category (id,"name",created_at,modified_at)
 VALUES ('43b4474e-ffe6-4156-b0c3-452df5dba2fc', 'Python','2022-06-07T22:59:00+01','2022-06-07T23:59:00+01')
 
 INSERT INTO public.category (id,"name",created_at,modified_at)
-VALUES ('56b4474e-ffe6-4156-b0c3-452df5dba2fc', 'Vue','2022-06-07T22:59:00+01','2022-06-07T23:59:00+01')
+VALUES ('56b4474e-ffe6-4156-b0c3-452df5dba2fc', 'Docker','2022-06-07T22:59:00+01','2022-06-07T23:59:00+01')
 
 INSERT INTO public.comment (id,author,content,like_count,dislike_count,article_id,created_at,modified_at)
-VALUES ('90b4474e-ffe6-4156-b0c3-452df5dba2fc', 'wnowak8','Super pomocny artykul',0,0,'b38c7e20-e688-11ec-8fea-0242ac120002','2022-06-07T23:59:00+01','2022-06-07T23:59:00+01')
+VALUES ('90b4474e-ffe6-4156-b0c3-452df5dba2fc', 'wnowak','Super pomocny artykul',0,0,'b38c7e20-e688-11ec-8fea-0242ac120002','2022-06-07T23:59:00+01','2022-06-07T23:59:00+01')
+
+INSERT INTO public.relation_category_article (id,category_id,article_id)
+VALUES ('87b4474e-ffe6-4156-b0c3-452df5dba2fc', '56b4474e-ffe6-4156-b0c3-452df5dba2fc','cae6eeee-e68d-11ec-8fea-0242ac120002')
+
+INSERT INTO public.relation_category_article (id,category_id,article_id)
+VALUES ('99b4474e-ffe6-4156-b0c3-452df5dba2fc', '43b4474e-ffe6-4156-b0c3-452df5dba2fc','9650f87d-c6cc-4830-ad9a-d7c2d8bef522')
