@@ -88,9 +88,17 @@ def update_comments(comment_id):
     data = request.json
     return flask_service.update_comment(db=postgresDB, comment_id=comment_id, data=data)
 
+
 @app.route('/comments/<comment_id>', methods=['DELETE'])
 def delete_comments(comment_id):
     return flask_service.delete_comment(db=postgresDB, comment_id=comment_id,comment_table=comment_table)
+
+
+@app.route("/export", methods=['GET'])
+def to_txt():
+    return flask_service.db_to_txt(db=postgresDB, article_table=article_table,
+                                   relation_category_article_table=relation_category_article_table,
+                                   category_table=category_table, comment_table=comment_table)
 
 if __name__ == "__main__":
     logger = get_module_logger(mod_name=__name__, log_path='./logs/app_logs.log', lvl=logging.DEBUG)
