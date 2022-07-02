@@ -1,129 +1,257 @@
-import os
-import logging
-from dotenv import load_dotenv
-from flask import Flask, jsonify, request
-from flask_cors import CORS
-from flask_restful import Api, Resource, reqparse
+import datetime
+import json
+import uuid
+
+import pandas as pd
+from flask import jsonify
 from models.db.postgresDB import PostgresDB
-from models.services.logger import get_module_logger
-import models.services.flask_service as flask_service
+from models.services import utils
 
 from sqlalchemy import select, and_
-import codecs, json
-
-load_dotenv()
-
-app = Flask(__name__)
-
-CORS(app, resources=r'/*')
-
-parser = reqparse.RequestParser()
-parser.add_argument('keywords', type=list)
+from flask import send_file
 
 
-@app.route('/', methods=['GET'])
-def hello_server():
-    return jsonify({"info": "Server works"}), 200
-
-
-@app.route('/articles', methods=['GET'])
-def get_articles():
-    article_id = request.args.get("article_id", None)
-    return flask_service.get_articles(db=postgresDB, article_id=article_id)
-
-
-# TODO: z parametrem
-# @app.route('/articles', methods=['GET'])
-# def get_articles():
-#     keywords = parser.parse_args()
-#     return keywords
-#     #return flask_service.get_articles(db=postgresDB, keywords=keywords)
-
-
-@app.route('/articles', methods=['POST'])
-def create_article():
-    data = request.json
-    return flask_service.create_article(db=postgresDB, data=data)
-
-
-@app.route('/articles/<article_id>', methods=['PUT'])
-def update_article(article_id):
-    data = request.json
-    return flask_service.update_article(db=postgresDB, article_id=article_id, data=data)
-
-
-@app.route('/articles/<article_id>', methods=['DELETE'])
-def delete_article(article_id):
-    return flask_service.delete_article(db=postgresDB, article_id=article_id, article_table=article_table)
-
-
-@app.route('/categories', methods=['GET'])
-def get_category():
-    category_id = request.args.get("category_id", None)
-    return flask_service.get_categories(db=postgresDB, category_id=category_id)
-
-
-@app.route('/categories', methods=['POST'])
-def create_categories():
-    data = request.json
-    return flask_service.create_category(db=postgresDB, data=data)
-
-
-@app.route('/categories/<category_id>', methods=['PUT'])
-def update_categories(category_id):
-    data = request.json
-    return flask_service.update_category(db=postgresDB, category_id=category_id, data=data)
-
-
-@app.route('/categories/<category_id>', methods=['DELETE'])
-def delete_categories(category_id):
-    return flask_service.delete_category(db=postgresDB, category_id=category_id, category_table=category_table)
-
-
-@app.route('/comments', methods=['GET'])
-def get_comment():
-    article_id = request.args.get("article_id", None)
-    author = request.args.get("author", None)
-    return flask_service.get_comments(db=postgresDB, article_id=article_id, author=author, comment_table=comment_table)
-
-
-@app.route('/comments', methods=['POST'])
-def create_comments():
-    data = request.json
-    return flask_service.create_comment(db=postgresDB, data=data)
-
-
-@app.route('/comments/<comment_id>', methods=['PUT'])
-def update_comments(comment_id):
-    data = request.json
-    return flask_service.update_comment(db=postgresDB, comment_id=comment_id, data=data)
-
-
-@app.route('/comments/<comment_id>', methods=['DELETE'])
-def delete_comments(comment_id):
-    return flask_service.delete_comment(db=postgresDB, comment_id=comment_id, comment_table=comment_table)
-
-
-@app.route("/export", methods=['GET'])
-def to_txt():
-    return flask_service.db_to_txt(db=postgresDB, article_table=article_table,
-                                   relation_category_article_table=relation_category_article_table,
-                                   category_table=category_table, comment_table=comment_table)
-    # return jsonify({"Test": "It's working"})
-
-
-if __name__ == "__main__":
-    logger = get_module_logger(mod_name=__name__, log_path='./logs/app_logs.log', lvl=logging.DEBUG)
-    postgresDB = PostgresDB(db_host=os.environ.get("DB_HOST"), db_port=os.environ.get("DB_PORT"),
-                            db_user=os.environ.get("POSTGRES_USER"), db_password=os.environ.get("POSTGRES_PASSWORD"),
-                            db_name=os.environ.get("POSTGRES_DB"))
+def get_articles(db: PostgresDB, article_id):
     try:
-        article_table = postgresDB.get_table('article')
-        category_table = postgresDB.get_table('category')
-        comment_table = postgresDB.get_table('comment')
-        relation_category_article_table = postgresDB.get_table('relation_category_article')
-        logger.info('Got tables')
-        app.run(host='0.0.0.0', port=5000)
-    except Exception as e:
-        logger.exception(e)
-        logger.exception('Error, could not get tables from database')
+        result = db.get(table_name="article", id=article_id)
+    except:
+        return jsonify({'error': 'Could not get data from database'}), 400
+    else:
+        df = result.to_dict(orient='records')
+        # df = df.astype({'created_at': 'int64', 'modified_at': 'int64'})
+        return jsonify(df), 200
+
+
+def create_article(db: PostgresDB, data):
+    data['id'] = uuid.uuid4()
+    data['created_at'] = datetime.datetime.now()
+    data['modified_at'] = datetime.datetime.now()
+    data['like_count'] = 0
+    data['dislike_count'] = 0
+    df = pd.DataFrame(data=data, columns=utils.article_columns, index=[0])
+    try:
+        db.create(table_name='article', df=df)
+    except:
+        return jsonify({'error': 'Could not create article in database'}), 400
+    else:
+        return df.to_dict(orient='records')[0], 200
+
+
+def update_article(db: PostgresDB, article_id, data):
+    data['modified_at'] = datetime.datetime.now()
+    try:
+        db.update(table_name='article', id=article_id, data=data)
+        return jsonify({"article_id": article_id})
+    except:
+        return jsonify({'Could not update article'})
+        raise Exception('Could not update article')
+
+
+def delete_article(db: PostgresDB, article_id, article_table):
+    try:
+        db.delete(table_name='article', id=article_id, id_column=article_table.c.id)
+        return jsonify({"article_id": article_id})
+    except:
+        return jsonify({'Could not delete article'})
+        raise Exception('Could not delete article')
+
+
+def get_categories(db: PostgresDB, category_id):
+    try:
+        result = db.get(table_name="category", id=category_id)
+    except:
+        return jsonify({'error': 'Could not get data from database'}), 400
+    else:
+        df = result.to_dict(orient='records')
+        # df = df.astype({'created_at': 'int64', 'modified_at': 'int64'})
+        return jsonify(df), 200
+
+
+def create_category(db: PostgresDB, data):
+    data['id'] = uuid.uuid4()
+    data['created_at'] = datetime.datetime.now()
+    data['modified_at'] = datetime.datetime.now()
+    df = pd.DataFrame(data=data, columns=utils.category_columns, index=[0])
+    try:
+        db.create(table_name='category', df=df)
+    except:
+        return jsonify({'error': 'Could not create category in database'}), 400
+    else:
+        return df.to_dict(orient='records')[0], 200
+
+
+def update_category(db: PostgresDB, category_id, data):
+    data['modified_at'] = datetime.datetime.now()
+    try:
+        db.update(table_name='category', id=category_id, data=data)
+        return jsonify({"category_id": category_id})
+    except:
+        return jsonify({'Could not update category'})
+        raise Exception('Could not update category')
+
+
+def delete_category(db: PostgresDB, category_id, category_table):
+    try:
+        db.delete(table_name='category', id=category_id, id_column=category_table.c.id)
+        return jsonify({"category_id": category_id})
+    except:
+        return jsonify({'Could not delete category'})
+        raise Exception('Could not delete category')
+
+
+def get_comments(db: PostgresDB, article_id, author, comment_table):
+    if article_id is not None:
+        query = select(comment_table.c.id,
+                       comment_table.c.author,
+                       comment_table.c.content,
+                       comment_table.c.like_count,
+                       comment_table.c.dislike_count,
+                       comment_table.c.created_at,
+                       comment_table.c.modified_at
+                       ) \
+            .where(comment_table.c.article_id == article_id)
+    elif author is not None:
+        query = select(comment_table.c.id,
+                       comment_table.c.author,
+                       comment_table.c.content,
+                       comment_table.c.like_count,
+                       comment_table.c.dislike_count,
+                       comment_table.c.created_at,
+                       comment_table.c.modified_at
+                       ) \
+            .where(comment_table.c.author == author)
+    try:
+        result = db.get_df_from_sql(query=query)
+    except:
+        return jsonify({'error': 'Could not get data from database'}), 400
+    else:
+        df = result.to_dict(orient='records')
+        # df = df.astype({'created_at': 'int64', 'modified_at': 'int64'})
+        return jsonify(df), 200
+
+
+def create_comment(db: PostgresDB, data):
+    data['id'] = uuid.uuid4()
+    data['created_at'] = datetime.datetime.now()
+    data['modified_at'] = datetime.datetime.now()
+    data['like_count'] = 0
+    data['dislike_count'] = 0
+    df = pd.DataFrame(data=data, columns=utils.comment_columns, index=[0])
+    try:
+        db.create(table_name='comment', df=df)
+    except:
+        return jsonify({'error': 'Could not create comment in database'}), 400
+    else:
+        return df.to_dict(orient='records')[0], 200
+
+
+def update_comment(db: PostgresDB, comment_id, data):
+    data['modified_at'] = datetime.datetime.now()
+    try:
+        db.update(table_name='comment', id=comment_id, data=data)
+        return jsonify({"comment_id": comment_id})
+    except:
+        return jsonify({'Could not update comment'})
+        raise Exception('Could not update comment')
+
+
+def delete_comment(db: PostgresDB, comment_id, comment_table):
+    try:
+        db.delete(table_name='comment', id=comment_id, id_column=comment_table.c.id)
+        return jsonify({"comment_id": comment_id})
+    except:
+        return jsonify({'Could not delete comment'})
+        raise Exception('Could not delete comment')
+def db_to_txt(db: PostgresDB,article_table,relation_category_article_table,category_table,comment_table):
+    query = select(article_table.c.id,
+                   article_table.c.title,
+                   article_table.c.content,
+                   article_table.c.author) \
+        .join(relation_category_article_table, article_table.c.id == relation_category_article_table.c.article_id)
+    try:
+        article_data = db.get_df_from_sql(query=query)
+        print('Response has been sent')
+    except:
+        print('Could not get data from database')
+        raise Exception('Could not get data from database')
+    articles_ids = article_data['id'].to_list()
+
+    query = select(relation_category_article_table.c.article_id.label("id"),
+                   category_table.c.id.label("CategoryId"),
+                   category_table.c.name) \
+        .where(relation_category_article_table.c.article_id.in_(articles_ids)) \
+        .join(category_table, category_table.c.id == relation_category_article_table.c.category_id)
+    try:
+        category_data = db.get_df_from_sql(query=query)
+        print('Response has been sent')
+    except:
+        print('Could not get data from database')
+        raise Exception('Could not get data from database')
+    article_data = article_data.to_dict(orient='records')
+    for article in article_data: article['categories'] = []
+    for index, row in category_data.iterrows():
+        category = {
+            "name": row['name'],
+        }
+        for article in article_data:
+            if article['id'] == row['id']:
+                article['categories'].append(category)
+                break
+
+    query = select(comment_table.c.article_id.label("id"),
+                   comment_table.c.id.label("commentId"),
+                   comment_table.c.author,
+                   comment_table.c.content)
+    try:
+        comment_data = db.get_df_from_sql(query=query)
+        print('Response has been sent')
+    except:
+        print('Could not get data from database')
+        raise Exception('Could not get data from database')
+    for article in article_data: article['comments'] = []
+
+    for index, row in comment_data.iterrows():
+        comment = {
+            "author": row['author'],
+            "content": row['content'],
+        }
+        for article in article_data:
+            if article['id'] == row['id']:
+                article['comments'].append(comment)
+                break
+    txt=article_representation(article_data)
+    # open text file
+    text_file = open("articles.txt", "w")
+    # write string to file
+    text_file.write(txt)
+    # close file
+    text_file.close()
+    return send_file('articles.txt', as_attachment=True)
+    # return jsonify(article_data), 200
+def comment_representation(comments:[]):
+    comment_str=""
+    for comment in comments:
+        comment_str=comment_str+comment['author']+":"+comment['content']+"#!@-@!#"
+    return comment_str
+
+def category_representation(categories:[]):
+    category_str=""
+    for category in categories:
+        category_str=category_str+category['name']+"#!@-@!#"
+    return category_str
+
+def article_representation(articles:[]):
+    article_str=""
+    articles_str=""
+    comments=""
+    categories=""
+    for article in articles:
+        if article['categories']:
+            categories = category_representation(article['categories'])
+        if article['comments']:
+            comments = comment_representation(article['comments'])
+            article_str=f"{article['title']}\n{article['author']}\n{article['content']}\n{categories}\n{comments}\n@!#!@\n"
+        else:
+            article_str = f"{article['title']}\n{article['author']}\n{article['content']}\n{categories}\n@!#!@\n"
+        articles_str=articles_str+article_str
+    return articles_str
