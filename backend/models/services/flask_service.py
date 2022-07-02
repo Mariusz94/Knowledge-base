@@ -220,11 +220,8 @@ def db_to_txt(db: PostgresDB,article_table,relation_category_article_table,categ
                 article['comments'].append(comment)
                 break
     txt=article_representation(article_data)
-    # open text file
     text_file = open("articles.txt", "w")
-    # write string to file
     text_file.write(txt)
-    # close file
     text_file.close()
     return send_file('articles.txt', as_attachment=True)
     # return jsonify(article_data), 200
