@@ -378,6 +378,23 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "To txt",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/export",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"export"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
