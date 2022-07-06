@@ -1,0 +1,12 @@
+version: '3.1'
+
+services:
+  knowledge-base:
+    container_name: knowledge-base
+    restart: always
+    build: ./
+    
+    ports:
+      - 80:3000
+    expose:
+      - 80

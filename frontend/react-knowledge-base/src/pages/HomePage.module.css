@@ -1,0 +1,14 @@
+.content_title {
+    height: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+  }
+  
+  .content_body {
+    height: 90%;
+    margin: 10px;
+    padding: 10px;
+    color: white;
+  }
