@@ -12,3 +12,12 @@
     padding: 10px;
     color: white;
   }
+
+  .article_footer {
+    color:white;
+    font-size: 0.8rem;
+  }
+
+  .article_footer__author {
+    font-size: 0.9rem;
+  }

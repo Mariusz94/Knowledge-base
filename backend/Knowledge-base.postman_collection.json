@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "26d22356-bc13-4ceb-96ad-22d80fbc82d5",
+		"_postman_id": "0582123f-250b-474b-909a-411aa6b4941b",
 		"name": "Knowledge-base",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "17811978"
+		"_exporter_id": "17443842"
 	},
 	"item": [
 		{
@@ -38,7 +38,51 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Articles - all",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/articles",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"articles"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.1.2 Python/3.8.13"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 06 Jul 2022 17:58:17 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "2743"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"author\": \"mlyszczarz\",\n        \"content\": \"Pobieranie aktualnego czas, data, timestamp import pandas as pd -> pd.Timestamp.now() int(pd.Timestamp.now().value /10**9) -> 139397478\",\n        \"created_at\": \"Tue, 07 Jun 2022 21:59:00 GMT\",\n        \"dislike_count\": 0,\n        \"id\": \"9650f87d-c6cc-4830-ad9a-d7c2d8bef522\",\n        \"like_count\": 0,\n        \"modified_at\": \"Tue, 07 Jun 2022 22:59:00 GMT\",\n        \"title\": \"Python\"\n    },\n    {\n        \"author\": \"mlyszczarz\",\n        \"content\": \"Tworzenie odrębnego środowiska\\\\npython -m venv venv\\\\n. venv\\\\\\\"Scripts\\\\\\\"activate\\\\ndeactivate\\\\nTworzenie venv z bibliotekami w systemie\\\\npython -m venv --system-site-packages venv\\\\n. venv\\\\\\\"Scripts\\\\\\\"activate\\\\nPobieranie zależności do pliku tekstowego\\\\npip freeze > zaleznosci.txt\",\n        \"created_at\": \"Mon, 06 Jun 2022 21:59:00 GMT\",\n        \"dislike_count\": 0,\n        \"id\": \"b38c7e20-e688-11ec-8fea-0242ac120002\",\n        \"like_count\": 0,\n        \"modified_at\": \"Mon, 06 Jun 2022 22:59:00 GMT\",\n        \"title\": \"Venv\"\n    },\n    {\n        \"author\": \"wnowak\",\n        \"content\": \"FROM <OBRAZ> - jest to komenda, którą będą się zawsze zaczynały pliki Dockerfile. Wskazujemy nią obraz bazowy, jaki chcemy modyfikować, by stworzyć własny. \\\\nWORKDIR <PATH> - komenda służy do przejścia do konkretnego katalogu wewnątrz kontenera Dockera. Wszystkie nasze kolejne operacje będą wykonywane właśnie w tym wskazanym katalogu. W przypadku braku odpowiedniego katalogu zostanie on utworzony. \\\\nCOPY <SRC> <DEST> - jest komendą wykorzystywaną do kopiowania plików z komputera do tworzonego obrazu. Wykorzystujemy ją np. do kopiowania plików źródłowych naszej aplikacji. \\\\nADD <SRC> <DEST> - jest komendą podobną do COPY. Za jej pomocą także możemy kopiować pliki z komputera, do obrazu. Jednakże jako argument <SRC> nie musimy podać pliku z naszego komputera. W jego miejscu możemy podać na przykład URL, a podczas budowy obrazu Docker pobierze zasoby spod podanego linku. Ponadto, jeśli przez argument <SRC> przekażemy skompresowany plik, zostanie on rozpakowany. \\\\nEXPOSE <port>[/<protokół>] - otwiera port sieciowy kontenera, który umożliwia nawiązanie komunikacji pomiędzy kontenerem a światem zewnętrznym (domyślny protokół TCP, ale może być też UDP) // EXPOSE 7373/udp 8080 \\\\nRUN <COMMAND> - służy do uruchamiania komend shella wewnątrz kontenera Dockera w trakcie budowy obrazu (drugi sposób to tablica exec) . \\\\n\",\n        \"created_at\": \"Sat, 07 May 2022 21:59:00 GMT\",\n        \"dislike_count\": 0,\n        \"id\": \"cae6eeee-e68d-11ec-8fea-0242ac120002\",\n        \"like_count\": 0,\n        \"modified_at\": \"Sat, 07 May 2022 22:59:00 GMT\",\n        \"title\": \"Dockerfile\"\n    }\n]"
+				}
+			]
 		},
 		{
 			"name": "Categories - all",
@@ -55,7 +99,55 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Categories - all",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.1.2 Python/3.8.13"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 06 Jul 2022 19:04:29 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "308"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"created_at\": \"Tue, 07 Jun 2022 21:59:00 GMT\",\n        \"id\": \"43b4474e-ffe6-4156-b0c3-452df5dba2fc\",\n        \"modified_at\": \"Tue, 07 Jun 2022 22:59:00 GMT\",\n        \"name\": \"Python\"\n    },\n    {\n        \"created_at\": \"Tue, 07 Jun 2022 21:59:00 GMT\",\n        \"id\": \"56b4474e-ffe6-4156-b0c3-452df5dba2fc\",\n        \"modified_at\": \"Tue, 07 Jun 2022 22:59:00 GMT\",\n        \"name\": \"Docker\"\n    }\n]"
+				}
+			]
 		},
 		{
 			"name": "Articles - by article id",
@@ -420,7 +512,7 @@
 	"variable": [
 		{
 			"key": "url",
-			"value": "http://localhost:5000\n",
+			"value": "http://localhost:5000",
 			"type": "string"
 		}
 	]

@@ -12,6 +12,8 @@ load_dotenv()
 
 app = Flask(__name__)
 
+CORS(app, resources=r'/*')
+
 parser = reqparse.RequestParser()
 parser.add_argument('keywords', type=list)
 
