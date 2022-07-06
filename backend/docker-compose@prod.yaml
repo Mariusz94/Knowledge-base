@@ -18,3 +18,16 @@ services:
       - 5000
     env_file:
       - ./.env-prod
+    depends_on:
+      - postgres
+    # external_links:
+    #   - postgres:postgres
+    networks:
+      - knowledge_base
+    external_links:
+      - postgres:postgres
+
+networks:
+  knowledge_base:
+    name: knowledge_base
+    driver: bridge

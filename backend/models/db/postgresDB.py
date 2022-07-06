@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from logger import get_module_logger
+from models.services.logger import get_module_logger
 import logging
 import pandas as pd
 from sqlalchemy import create_engine, select, Table, update
@@ -47,7 +47,7 @@ class PostgresDB():
     def get(self, table_name:str, id:str):
         table = self.get_table(table_name=table_name)
         try:
-            if id is None:
+            if id is not None:
                 query = select(table).where(table.c.id == id)
             else:
                 query = select(table)
