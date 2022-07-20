@@ -11,8 +11,11 @@ services:
       - '5435'
     networks:
       - knowledge_base
+    environment:
+      PGDATA: /var/lib/postgresql/data/postgres-data/
     volumes:
       - ./models/db/postgres-schema.sql:/docker-entrypoint-initdb.d/db.sql
+      - ./:/var/lib/postgresql/data
 
 networks:
   knowledge_base:
